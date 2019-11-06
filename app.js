@@ -17,10 +17,12 @@ var campgroundRoutes = require("./routes/campgrounds");
 var commentRoutes = require("./routes/comments");
 
 
-mongoose.set('useUnifiedTopology', true); //to remove the deprecation in new mongoose version
-mongoose.connect("mongodb://localhost:27017/yelp_camp",{useNewUrlParser:true});
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp" ;
 
-//mongoose.connect("mongodb+srv://root:admin@123@cluster0-g1cp3.mongodb.net/test?retryWrites=true&w=majority",{useNewUrlParser:true});
+mongoose.set('useUnifiedTopology', true); //to remove the deprecation in new mongoose version
+mongoose.connect(url,{useNewUrlParser:true});
+
+
 
 
 app.set("view engine","ejs");
@@ -71,13 +73,13 @@ app.use("/campgrounds/:id/comments",commentRoutes);
 //LISTENERS
 //===================================================
 
-app.listen(3000,function(req,res){
-	console.log("Yelp Camp Server is up and running.!!!!");
-});
-
-// app.listen(process.env.PORT, process.env.IP, function(){
-//    console.log("The YelpCamp Server Has Started!");
+// app.listen(3000,function(req,res){
+// 	console.log("Yelp Camp Server is up and running.!!!!");
 // });
+
+app.listen(process.env.PORT, process.env.IP, function(){
+   console.log("The YelpCamp Server Has Started!");
+});
 
 //===================================================
 //===================================================
