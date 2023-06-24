@@ -31,7 +31,7 @@ jobs:
 
       - name: build and push docker images
         run: |
-          docker build -t gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp
+          docker build -t gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp .
           docker push gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp
 
       - name: deploy to cloud run
