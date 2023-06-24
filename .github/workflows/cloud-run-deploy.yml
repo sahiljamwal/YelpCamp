@@ -1,0 +1,37 @@
+name: Cloud Run Deploy
+
+on:
+  push:
+    branches:
+      - master
+      - dockerise
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: set up google cloud sdk
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: "346.0.0"
+          service_account_key: ${{secrets.GCLOUD_SERVICE_KEY }}
+          project_id: ${{secrets.GCLOUD_PROJECT_ID }}
+
+      - name: Configure Docker to use the gcloud command-line tool as a credential helper
+        run: gcloud --quiet auth configure-docker
+
+      - name: build and push docker images
+        run: |
+          docker build -t gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp
+          docker push gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp
+
+      - name: deploy to cloud run
+        run: |
+          gcloud run deploy yelpcamp \
+          -- image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp \ 
+          -- platform managed \
+          -- region us-central1 \
+          -- allow-unauthenticated

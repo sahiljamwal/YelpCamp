@@ -3,3 +3,5 @@
 
 # environment files
 .env
+
+# gcloud builds submit --tag gcr.io/docker-cloud-run/yelpcamp:latest
