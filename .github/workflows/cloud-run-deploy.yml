@@ -21,7 +21,8 @@ jobs:
           project_id: ${{secrets.GCLOUD_PROJECT_ID }}
 
       - name: Configure Docker to use the gcloud command-line tool as a credential helper
-        run: gcloud --quiet auth configure-docker
+        run: |
+          gcloud --quiet auth configure-docker
 
       - name: build and push docker images
         run: |
