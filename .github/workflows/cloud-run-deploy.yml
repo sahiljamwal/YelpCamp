@@ -36,8 +36,4 @@ jobs:
 
       - name: deploy to cloud run
         run: |
-          gcloud run deploy yelpcamp \
-          -- image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp \ 
-          -- platform managed \
-          -- region us-central1 \
-          -- allow-unauthenticated
+          gcloud run deploy yelpcamp --image gcr.io/${{secrets.GCLOUD_PROJECT_ID}}/yelpcamp --platform managed --region asia-south1 --allow-unauthenticated
